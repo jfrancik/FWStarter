@@ -1,5 +1,8 @@
+*.suo
+*.sdf
 Debug
+Release
 FWStarter/Debug
+FWStarter/Release
 FWStarter/*.aps
-FWStarter/*.filters
 FWStarter/*.user

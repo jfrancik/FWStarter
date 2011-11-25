@@ -125,7 +125,7 @@ int CChildView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 		HRESULT h;
 		h = CoCreateInstance(CLSID_FWDevice, NULL, CLSCTX_INPROC_SERVER, IID_IFWDevice, (void**)&m_pFWDevice);
 		if (FAILED(h)) throw ERROR_FREEWILL;
-		TRACE(L"FreeWill+ system initialised successfully.");
+		TRACE(L"FreeWill+ system initialised successfully.\n");
 
 		// Set up the error handler
 		m_pFWDevice->SetUserErrorHandler(HandleErrors);
@@ -137,7 +137,7 @@ int CChildView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 		if (FAILED(h)) throw ERROR_INTERNAL;
 		FWCOLOR back = { 0.33f, 0.33f, 0.33f };		// gray
 		m_pRenderer->PutBackColor(back);
-		TRACE(L"Renderer started successfully.");
+		TRACE(L"Renderer started successfully.\n");
 
 		// #FreeWill: create & initialise the buffers - determine hardware factors
 		IMeshVertexBuffer *pVertexBuffer;
@@ -169,7 +169,7 @@ int CChildView::OnCreate(LPCREATESTRUCT lpCreateStruct)
 		h = pLoader->LoadScene((LPOLESTR)(LPCOLESTR)(L"scene.3D"), m_pScene);
 		if (FAILED(h)) throw ERROR_INTERNAL;
 		pLoader->Release();
-		TRACE(L"Scene loaded.");
+		TRACE(L"Scene loaded.\n");
 
 		// Load Body Object
 		IKineNode *pBody = NULL;
