@@ -1,0 +1,5 @@
+Debug
+FWStarter/Debug
+FWStarter/*.aps
+FWStarter/*.filters
+FWStarter/*.user
