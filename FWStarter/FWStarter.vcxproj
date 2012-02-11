@@ -98,6 +98,7 @@
     <None Include="ReadMe.txt" />
     <None Include="res\FWStarter.ico" />
     <None Include="res\FWStarter.rc2" />
+    <None Include="res\icon1.ico" />
     <None Include="res\Toolbar.bmp" />
     <None Include="res\Toolbar256.bmp" />
     <None Include="UserImages.bmp" />

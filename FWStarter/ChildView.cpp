@@ -3,6 +3,8 @@
 //
 
 #include "stdafx.h"
+#define _USE_MATH_DEFINES
+#include <math.h>
 #include "FWStarter.h"
 #include "ChildView.h"
 
@@ -13,6 +15,8 @@
 #define new DEBUG_NEW
 #endif
 
+#define DEG2RAD(d)	( (d) * (FWFLOAT)M_PI / 180.0f )
+#define RAD2DEG(r)	( 180.0f * (r) / (FWFLOAT)M_PI )
 
 // CChildView
 
@@ -34,6 +38,7 @@ BEGIN_MESSAGE_MAP(CChildView, CWnd)
 	ON_COMMAND(ID_ACTIONS_ACTION2, &CChildView::OnActionsAction2)
 	ON_COMMAND(ID_ACTIONS_ACTION3, &CChildView::OnActionsAction3)
 	ON_COMMAND(ID_ACTIONS_ACTION4, &CChildView::OnActionsAction4)
+	ON_COMMAND(ID_ACTIONS_ACTION5, &CChildView::OnActionsAction5)
 END_MESSAGE_MAP()
 
 
@@ -234,11 +239,39 @@ void CChildView::OnActionsAction1()
 
 void CChildView::OnActionsAction2()
 {
+	IFWUnknown *p = NULL;
+	FWULONG nDur = 150;
+
+	ITransform *pT;
+	m_pBody->CreateCompatibleTransform(&pT);
+	pT->FromRotationZ(1);
+	p = FWCreateObjWeakPtr(m_pFWDevice, L"Action", L"Rotate", m_pActionTick, p, 500, m_pBody, BODY_ARM, pT);
+	p = FWCreateObjWeakPtr(m_pFWDevice, L"Action", L"Rotate", m_pActionTick, p, 500, m_pBody, BODY_LEG+BODY_LEFT, pT);
+	pT->FromRotationZ(-2);
+	p = FWCreateObjWeakPtr(m_pFWDevice, L"Action", L"Rotate", m_pActionTick, p, 1000, m_pBody, BODY_ARM, pT);
+	pT->FromRotationZ(1);
+	p = FWCreateObjWeakPtr(m_pFWDevice, L"Action", L"Rotate", m_pActionTick, p, 500, m_pBody, BODY_ARM, pT);
+
+	m_pRenderer->Play();
 }
 
 
 void CChildView::OnActionsAction3()
 {
+	IFWUnknown *p = NULL;
+	FWULONG nDur = 150;
+
+	IKineChild *pWall = NULL;
+	m_pScene->GetChild(L"Box03", &pWall);
+	FWVECTOR v = { 40, -40, 30 };
+		
+	p = FWCreateObjWeakPtr(m_pFWDevice, L"Action", L"Walk", m_pActionTick, p, nDur, L"close", m_pBody, 80.0f, 20.0f, 12);
+	p = FWCreateObjWeakPtr(m_pFWDevice, L"Action", L"Turn", m_pActionTick, p, nDur, L"close", m_pBody, DEG2RAD(-120), 3);
+	p = FWCreateObjWeakPtr(m_pFWDevice, L"Action", L"Point", m_pActionTick, 2500, 500, L"", m_pBody, pWall, v);
+	p = FWCreateObjWeakPtr(m_pFWDevice, L"Action", L"Wait", m_pActionTick, p, 500, L"", m_pBody, 20000);
+	p = FWCreateObjWeakPtr(m_pFWDevice, L"Action", L"Walk", m_pActionTick, p, nDur, L"open", m_pBody, -46.0f, -57.0f, 12);
+
+	m_pRenderer->Play();
 }
 
 
@@ -251,4 +284,19 @@ void CChildView::OnActionsAction4()
 		pObj->PutVisible(FALSE);
 	if (pChild) pChild->Release(); 
 	if (pObj) pObj->Release();
+}
+
+
+void CChildView::OnActionsAction5()
+{
+	IFWUnknown *p = NULL;
+	FWULONG nDur = 150;
+
+	IKineChild *pWall = NULL;
+	m_pScene->GetChild(L"Box03", &pWall);
+	FWVECTOR v = { 40, -40, 30 };
+		
+	p = FWCreateObjWeakPtr(m_pFWDevice, L"Action", L"Bend", m_pActionTick, p, nDur, m_pBody);
+
+	m_pRenderer->Play();
 }

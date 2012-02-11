@@ -50,5 +50,6 @@ public:
 	afx_msg void OnActionsAction2();
 	afx_msg void OnActionsAction3();
 	afx_msg void OnActionsAction4();
+	afx_msg void OnActionsAction5();
 };
 
