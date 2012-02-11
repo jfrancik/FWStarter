@@ -51,5 +51,7 @@ public:
 	afx_msg void OnActionsAction3();
 	afx_msg void OnActionsAction4();
 	afx_msg void OnActionsAction5();
+	afx_msg void OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags);
+	afx_msg void OnActionsAction6();
 };
 

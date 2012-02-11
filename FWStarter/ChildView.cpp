@@ -39,6 +39,8 @@ BEGIN_MESSAGE_MAP(CChildView, CWnd)
 	ON_COMMAND(ID_ACTIONS_ACTION3, &CChildView::OnActionsAction3)
 	ON_COMMAND(ID_ACTIONS_ACTION4, &CChildView::OnActionsAction4)
 	ON_COMMAND(ID_ACTIONS_ACTION5, &CChildView::OnActionsAction5)
+	ON_WM_KEYDOWN()
+	ON_COMMAND(ID_ACTIONS_ACTION6, &CChildView::OnActionsAction6)
 END_MESSAGE_MAP()
 
 
@@ -298,5 +300,41 @@ void CChildView::OnActionsAction5()
 		
 	p = FWCreateObjWeakPtr(m_pFWDevice, L"Action", L"Bend", m_pActionTick, p, nDur, m_pBody);
 
+	m_pRenderer->Play();
+}
+
+
+void CChildView::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
+{
+	CWnd::OnKeyDown(nChar, nRepCnt, nFlags);
+
+	IFWUnknown *p = NULL;
+	FWULONG nDur = 150;
+	switch (nChar)
+	{
+	case 'A':
+		p = FWCreateObjWeakPtr(m_pFWDevice, L"Action", L"Step", m_pActionTick, p, nDur, L"", m_pBody, 0.5, DEG2RAD(-30), DEG2RAD(5));
+		break;
+	case 'D':
+		p = FWCreateObjWeakPtr(m_pFWDevice, L"Action", L"Step", m_pActionTick, p, nDur, L"", m_pBody, 0.5, DEG2RAD(30), DEG2RAD(5));
+		break;
+	case 'W':
+		p = FWCreateObjWeakPtr(m_pFWDevice, L"Action", L"Step", m_pActionTick, p, nDur, L"", m_pBody, 0.5, DEG2RAD(0), DEG2RAD(5));
+		break;
+	case 'S':
+		p = FWCreateObjWeakPtr(m_pFWDevice, L"Action", L"Turn", m_pActionTick, p, nDur, L"close", m_pBody, DEG2RAD(-120), 3);
+		break;
+	}
+	m_pRenderer->Play();
+
+
+}
+
+
+void CChildView::OnActionsAction6()
+{
+	IFWUnknown *p = NULL;
+	FWULONG nDur = 150;
+	p = FWCreateObjWeakPtr(m_pFWDevice, L"Action", L"Turn", m_pActionTick, p, nDur, L"close", m_pBody, DEG2RAD(-120), 3);
 	m_pRenderer->Play();
 }
